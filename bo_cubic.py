@@ -5,6 +5,7 @@ from ase.parallel import parprint,paropen
 from ase.eos import EquationOfState
 import matplotlib
 matplotlib.use('Agg')
+import matplotlib.pyplot as plt
 
 ###########################################################################
 kpoints = [8,8,8]
