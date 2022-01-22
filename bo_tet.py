@@ -4,7 +4,9 @@ from ase.io import read, write
 from ase.eos import EquationOfState
 import numpy as np
 import math as m
-
+import matplotlib
+matplotlib.use('Agg')
+import matplotlib.pyplot as plt
 
 # User inputs
 ############################################################
@@ -58,7 +60,8 @@ for i in range(nstep):
 eos_a = EquationOfState(v,e,eos='birchmurnaghan')
 v0, e0, B = eos_a.fit()
 ab_scaling = m.sqrt(v0/volume)
-
+eos_a.plot('eos_a.png', show=False)
+plt.close()
 
 # Optimize c
 for i in range(nstep):
@@ -85,11 +88,12 @@ for i in range(nstep):
 eos_c = EquationOfState(v,e,eos='birchmurnaghan')
 v0, e0, B = eos_c.fit()
 c_scaling = v0/(volume*ab_scaling*ab_scaling)
-
+eos_c.plot('eos_c.png', show=False)
+plt.close()
 
 # Set atoms to optimized cell parameters
 atoms = read(input_structure)
-calc = GPAW(xc=xc, gpts=gpoints, kpts=kpoints)
+calc = GPAW(xc=xc, gpts=gpoints, kpts=kpoints, txt='relax.txt')
 atoms.set_calculator(calc)
 cell = atoms.get_cell()
 cell[0][:] = ab_scaling*cell[0][:]
@@ -99,6 +103,5 @@ atoms.set_cell(cell,scale_atoms=True)
 
 # Do atom relax and write outputs
 write(output_structure,atoms)
-atoms.calc.set(txt='relax.txt')
 dyn=BFGS(atoms=atoms, trajectory='traj.traj', logfile = 'qn.log', maxstep=maxstep)
 dyn.run(fmax=fmaxx)
