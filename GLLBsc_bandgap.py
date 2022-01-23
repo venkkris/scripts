@@ -9,11 +9,14 @@ matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 
 
+#########################################################
 kpoints = [12, 12, 5]
 gpoints = [16, 16, 40]
-atoms = read('str.cif')
+#########################################################
+
 
 # Ground state calculation
+atoms = read('str.cif')
 calc = GPAW(xc = 'GLLBSC', gpts=gpoints, kpts=kpoints, random=True, occupations=FermiDirac(0.01), txt="gs.txt")
 atoms.calc = calc
 parprint('Potential energy: ', atoms.get_potential_energy())
