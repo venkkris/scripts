@@ -1,3 +1,5 @@
+# Author: Venkatesh Krishnamurthy
+
 from ase.optimize import BFGS
 from gpaw import *
 from ase.io import read, write
