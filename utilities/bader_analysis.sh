@@ -1,3 +1,4 @@
+## Author: Venkatesh Krishnamurthy
 #!/bin/bash
 cp /home/venkatek/scripts/utilities/charge.py .
 python charge.py > bader.out
