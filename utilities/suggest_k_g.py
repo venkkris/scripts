@@ -16,7 +16,8 @@ except:
     atoms = read(filenames[0])
     print('Read '+filenames[0]+'\n')
 
-cellpar = atoms.get_cell_lengths_and_angles()
+#cellpar = atoms.get_cell_lengths_and_angles()
+cellpar = atoms.cell.cellpar()
 a = cellpar[0]
 b = cellpar[1]
 c = cellpar[2]
