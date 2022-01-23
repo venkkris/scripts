@@ -9,12 +9,13 @@ matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 
 
-kpoints = [12, 12, 6]
-gpoints = [20, 20, 48]
+kpoints = [12, 12, 5]
+gpoints = [16, 16, 40]
 atoms = read('str.cif')
 
 # Ground state calculation
-atoms.calc = GPAW(xc = 'GLLBSC', gpts=gpoints, kpts=kpoints, random=True, occupations=FermiDirac(0.01), txt="gs.txt")
+calc = GPAW(xc = 'GLLBSC', gpts=gpoints, kpts=kpoints, random=True, occupations=FermiDirac(0.01), txt="gs.txt")
+atoms.calc = calc
 parprint('Potential energy: ', atoms.get_potential_energy())
 parprint('Fermi level: ', calc.get_fermi_level())
 atoms.calc.write('gs.gpw')
@@ -42,15 +43,15 @@ KS_gap, dxc = bs_response.calculate_discontinuity(dxc_pot)
 # Fundamental band gap = Kohn-Sham band gap + derivative discontinuity
 QP_gap = KS_gap + dxc
 
-print(f'Kohn-Sham band gap:         {KS_gap:.2f} eV')
-print(f'Discontinuity from GLLB-sc: {dxc:.2f} eV')
-print(f'Fundamental band gap:       {QP_gap:.2f} eV')
+parprint(f'Kohn-Sham band gap:         {KS_gap:.2f} eV')
+parprint(f'Discontinuity from GLLB-sc: {dxc:.2f} eV')
+parprint(f'Fundamental band gap:       {QP_gap:.2f} eV')
 
 
 
 
 # Get DOS and save to dos.csv                                                                        
-dos = DOS(bs_calc, npts=500, width=0)
+dos = DOS(calc, npts=500, width=0)
 energies = dos.get_energies()
 weights = dos.get_dos()
 np.savetxt('dos.csv', np.transpose([energies, weights]), delimiter=',', header='energies, weights')
