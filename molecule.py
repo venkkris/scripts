@@ -3,7 +3,7 @@ from gpaw import *
 from ase.optimize import BFGS
 
 a = 10
-calc = GPAW(xc='BEEF-vdW', h=0.20, txt='bfgs.txt')
+calc = GPAW(xc = 'BEEF-vdW', h=0.20, txt='bfgs.txt')
 
 system = molecule('H2')
 system.set_cell((a,a,a))
