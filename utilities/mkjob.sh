@@ -73,7 +73,7 @@ echo >> job.sh
 echo echo "Job started on \`hostname\` at \`date\`" >> job.sh
 echo >> job.sh
 echo spack load py-gpaw >> job.sh
-echo srun -n $num_cores gpaw python $pyscript >> job.sh
+echo srun --mpi=pmix -n $num_cores gpaw python $pyscript >> job.sh
 echo >> job.sh
 echo echo " " >> job.sh
 echo echo "Job Ended at \`date\`" >> job.sh
