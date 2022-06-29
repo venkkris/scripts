@@ -17,6 +17,6 @@ maxstep = 0.1
 
 atoms = read(input_structure)
 calc = GPAW(xc=xc, gpts=gpoints, kpts=kpoints, txt='bfgs.txt')
-atoms.set_calculator(calc)
+atoms.calc = calc
 dyn=BFGS(atoms=atoms, trajectory='traj.traj', logfile = 'qn.log', maxstep=maxstep)
 dyn.run(fmax=fmaxx)
