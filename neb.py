@@ -30,7 +30,7 @@ neb.interpolate('IDPP')
 
 
 for i,image in enumerate(images):
-    calc = GPAW(xc=xc, kpts=kpoints, gpts=gpoints, txt=str(i+1)+".txt", parallel = {'sl_auto':True})
+    calc = GPAW(xc=xc, kpts=kpoints, gpts=gpoints, txt=str(i+1)+".txt") #, parallel = {'sl_auto':True})
     image.set_calculator(calc)
 
 
