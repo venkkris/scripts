@@ -71,5 +71,5 @@ write(output_structure,atoms)
 #atoms.set_initial_magnetic_moments(magmom)
 calc = GPAW(xc=xc, gpts=gpoints, kpts=kpoints, spinpol=spin, convergence={'density':density,'eigenstates':eigenstates}, txt='bfgs.txt')
 atoms.calc = calc
-dyn=BFGS(atoms=atoms, trajectory='relax.traj', logfile = 'qn.log', maxstep=maxstep)
+dyn=BFGS(atoms=atoms, trajectory='traj.traj', logfile = 'qn.log', maxstep=maxstep)
 dyn.run(fmax=fmaxx)
