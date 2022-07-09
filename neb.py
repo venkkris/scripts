@@ -11,7 +11,7 @@ n_interpol = 3
 fmaxx = 0.03
 kpoints = [4, 4, 3]
 gpoints = [48, 48, 80]
-xc = 'BEEF-vdW'
+xc = 'PBE'
 #########################
 
 
