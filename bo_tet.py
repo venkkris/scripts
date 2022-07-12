@@ -12,7 +12,7 @@ import matplotlib.pyplot as plt
 ############################################################
 kpoints = [12, 12, 6]
 gpoints = [48, 48, 96]
-xc = 'BEEF-vdW'
+xc = 'PBE'
 ############################################################
 
 
@@ -93,7 +93,7 @@ plt.close()
 
 # Set atoms to optimized cell parameters
 atoms = read(input_structure)
-calc = GPAW(xc=xc, gpts=gpoints, kpts=kpoints, txt='relax.txt')
+calc = GPAW(xc=xc, gpts=gpoints, kpts=kpoints, txt='bfgs.txt')
 atoms.set_calculator(calc)
 cell = atoms.get_cell()
 cell[0][:] = ab_scaling*cell[0][:]

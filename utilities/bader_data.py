@@ -3,7 +3,7 @@ import glob
 from ase.data import atomic_numbers
 import numpy as np
 from ase.io.bader import attach_charges
-
+from ase.visualize import view
 
 fil = glob.glob('*.gpw')[0]
 f = open('ACF.dat','r')
@@ -34,4 +34,7 @@ for i in range(0,len(charge)):
     print (i,sym[i],charge[i])
 
 attach_charges(atoms, 'ACF.dat')
-#write('charges.cif',atoms)
+# view(atoms)
+atoms.set_initial_charges(charge)
+atoms.calc.atoms.set_initial_charges(charge)
+write('charges.extxyz',atoms)
