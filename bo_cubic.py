@@ -12,9 +12,10 @@ import matplotlib.pyplot as plt
 ###########################################################################
 kpoints = [8,8,8]
 gpoints = [24,24,24]
-xc = 'BEEF-vdW'
+xc = 'PBE'
 
 spin = False          # If true, initialize magnetic moments using magmom
+q = 0
 #magmom = [0.0]*natoms
 density = 1e-4
 eigenstates = 4e-8
@@ -48,7 +49,7 @@ for i in range(nstep):
 
 	# Calculate energy
 #	atoms.set_initial_magnetic_moments(magmom)
-	calc = GPAW(xc=xc, gpts=gpoints, kpts=kpoints, spinpol=spin, txt='a'+str(1+((nstep//2)-i)*step)+'.txt', convergence={'density':density,'eigenstates':eigenstates})
+	calc = GPAW(xc=xc, gpts=gpoints, kpts=kpoints, txt='a'+str(1+((nstep//2)-i)*step)+'.txt', convergence={'density':density,'eigenstates':eigenstates}, charge=q, spinpol=spin)
 	atoms.calc = calc
 	e[i] = atoms.get_potential_energy()
 	v[i] = atoms.get_volume()
@@ -69,7 +70,7 @@ atoms.set_cell(cell,scale_atoms=True)
 write(output_structure,atoms)
 
 #atoms.set_initial_magnetic_moments(magmom)
-calc = GPAW(xc=xc, gpts=gpoints, kpts=kpoints, spinpol=spin, convergence={'density':density,'eigenstates':eigenstates}, txt='bfgs.txt')
+calc = GPAW(xc=xc, gpts=gpoints, kpts=kpoints, convergence={'density':density,'eigenstates':eigenstates}, txt='bfgs.txt', charge=q, spinpol=spin)
 atoms.calc = calc
 dyn=BFGS(atoms=atoms, trajectory='traj.traj', logfile = 'qn.log', maxstep=maxstep)
 dyn.run(fmax=fmaxx)

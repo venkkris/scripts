@@ -13,6 +13,8 @@ import matplotlib.pyplot as plt
 kpoints = [12, 12, 6]
 gpoints = [48, 48, 96]
 xc = 'PBE'
+spin = False
+q = 0
 ############################################################
 
 
@@ -50,8 +52,8 @@ for i in range(nstep):
 	atoms.set_cell(cell,scale_atoms=True)
 
         # Calculate energy
-	calc = GPAW(xc=xc, gpts=gpoints, kpts=kpoints, txt='ab'+str(1+((nstep//2)-i)*step)+'.txt')
-	atoms.set_calculator(calc)
+	calc = GPAW(xc=xc, gpts=gpoints, kpts=kpoints, txt='ab'+str(1+((nstep//2)-i)*step)+'.txt', spinpol=spin, charge=q)
+	atoms.calc = calc
 	e[i] = atoms.get_potential_energy()
 	v[i] = atoms.get_volume()
 
@@ -78,8 +80,8 @@ for i in range(nstep):
         atoms.set_cell(cell,scale_atoms=True)
 
 	# Calculate energy
-        calc = GPAW(xc=xc, gpts=gpoints, kpts=kpoints, txt='c'+str(c[i])+'.txt')
-        atoms.set_calculator(calc)
+        calc = GPAW(xc=xc, gpts=gpoints, kpts=kpoints, txt='c'+str(c[i])+'.txt', spinpol=spin, charge=q)
+        atoms.calc = calc
         e[i] = atoms.get_potential_energy()
         v[i] = atoms.get_volume()
 
@@ -93,8 +95,8 @@ plt.close()
 
 # Set atoms to optimized cell parameters
 atoms = read(input_structure)
-calc = GPAW(xc=xc, gpts=gpoints, kpts=kpoints, txt='bfgs.txt')
-atoms.set_calculator(calc)
+calc = GPAW(xc=xc, gpts=gpoints, kpts=kpoints, txt='bfgs.txt', spinpol=spin, charge=q)
+atoms.calc = calc
 cell = atoms.get_cell()
 cell[0][:] = ab_scaling*cell[0][:]
 cell[1][:] = ab_scaling*cell[1][:]
